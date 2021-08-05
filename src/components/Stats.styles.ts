@@ -31,7 +31,11 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     font-size: 0.8rem;
     width: 100%;
     height: 40px;
-    margin: 5px 0;
-    
+    margin: 5px 0px;
+    background: linear-gradient( 
+      180deg
+      ,#ffffff,#91ffe6);
+    border: 2px solid #50d2db;
+    border-radius: 6px;
   }
 `;

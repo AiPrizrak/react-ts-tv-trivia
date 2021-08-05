@@ -5,7 +5,7 @@ import QuestionCard from './components/QuestionCard';
 import Stats from './components/Stats';
 
 // types
-import { QuestionsState, Difficulty } from './API';
+import { QuestionsState} from './API';
 // Styles
 import { GlobalStyle, Wrapper } from './App.styles';
 
@@ -37,10 +37,7 @@ const App: React.FC = () => {
 
   const startTrivia = async () => {
     setLoading(true);
-    const newQuestions = await fetchQuizQuestions(
-     10,
-      Difficulty.EASY
-    );
+    const newQuestions = await fetchQuizQuestions();
     setShowStats(false);
     setHintIsInUse(false);
     setQuestions(newQuestions);
@@ -63,9 +60,9 @@ const App: React.FC = () => {
   const setViewData = (question: QuestionsState) => {
     //reset display data for new question
     
-    const newQuestion = createQuestion(question.correct_answer);
+    const newQuestion = createQuestion(question.question);
     setQurrentQuestion(() => newQuestion);
-    setCurrentHint(()=>question.category);
+    setCurrentHint(()=>question.hint);
     setHintIsInUse(()=>false);
   }
 
@@ -86,7 +83,7 @@ const App: React.FC = () => {
       // User's answer
       const answer = e.currentTarget.value.trim();
       // Check answer against correct answer
-      const correct = questions[number].correct_answer.toLowerCase() === answer.toLowerCase();
+      const correct = questions[number].question.toLowerCase() === answer.toLowerCase();
       // Add score if answer is correct
       if (correct) {
         setCorrectUserAnswer((prev) =>  prev + 1);

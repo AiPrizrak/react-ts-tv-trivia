@@ -1,29 +1,33 @@
 import { shuffleArray } from './utils';
 
 export type Question = {
-  category: string;
-  correct_answer: string;
-  difficulty: string;
-  incorrect_answers: string[];
   question: string;
-  type: string;
+  hint: string;
 };
 
-export enum Difficulty {
-  EASY = "easy",
-  MEDIUM = "medium",
-  HARD = "hard",
-}
+export type Result = {
+  poster_path: string;
+  popularity: number;
+  id: number;
+  backdrop_path: string;
+  vote_average: number;
+  overview:string;
+  first_air_date: string;
+  origin_country: string[];
+  genre_ids: number[];
+  original_language: string;
+  vote_court: number;
+  name: string;
+  oiginal_name: string;
+};
 
+export const API_KEY = `d2f2eb83bd3651e2b293c650c3d27ab2`;
 export type QuestionsState = Question & { answers: string[] };
 
-export const fetchQuizQuestions = async (amount: number, difficulty: Difficulty): Promise<QuestionsState[]> => {
-  console.log('fetching')
-  const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`;
+export const fetchQuizQuestions = async (): Promise<QuestionsState[]> => {
+  const endpoint = `https://api.themoviedb.org/tv/top_rated/1?api_key=${API_KEY}`;
   const data = await (await fetch(endpoint)).json();
-  console.log(data)
-  return data.results.map((question: Question) => ({
-    ...question,
-    answers: shuffleArray([...question.incorrect_answers, question.correct_answer])
-  }))
+  return data.results.map((result: Result) => (
+    <Question>{question:result.name, hint: result.overview}
+  ))
 };

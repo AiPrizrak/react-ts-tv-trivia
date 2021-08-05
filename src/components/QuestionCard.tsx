@@ -60,7 +60,7 @@ const QuestionCard: React.FC<Props> = ({
           key={'Check the guess'}
           userClicked={question === userInput}
         >
-          <button disabled={userInput.length==0} value={userInput} onClick={OnSubmitHandler}>
+          <button disabled={userInput.length===0} value={userInput} onClick={OnSubmitHandler}>
             <span dangerouslySetInnerHTML={{ __html: 'Check the guess' }} />
           </button>
         </ButtonWrapper>
